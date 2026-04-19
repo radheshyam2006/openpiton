@@ -112,3 +112,14 @@ ucli.key
 cscope.*
 tags
 *.bak
+diag.ev
+diag.dump
+diag.exe
+diag.o
+mem.image
+symbol.tbl
+trace_hart_00.dasm
+perf.log
+status.log
+Dockerfile
+docker_run.sh

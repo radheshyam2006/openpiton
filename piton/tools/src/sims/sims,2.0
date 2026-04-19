@@ -1527,11 +1527,18 @@ sub generic_sim_build
       $build_cmd .= "-Wno-fatal " ;
       $build_cmd .= "-Wno-BLKANDNBLK " ;
       $build_cmd .= "-Wno-TIMESCALEMOD " ;
+      $build_cmd .= "-Wno-WIDTHEXPAND " ;
+      $build_cmd .= "-Wno-WIDTHTRUNC " ;
+      $build_cmd .= "-Wno-UNOPTFLAT " ;
+      $build_cmd .= "-Wno-ASCRANGE -Wno-CASEINCOMPLETE -Wno-CASEOVERLAP -Wno-CMPCONST " ;
+      $build_cmd .= "-Wno-IMPLICIT -Wno-LATCH -Wno-MISINDENT -Wno-MULTIDRIVEN -Wno-PINMISSING " ;
+      $build_cmd .= "-Wno-SELRANGE -Wno-STMTDLY -Wno-UNSIGNED -Wno-WIDTHCONCAT " ;
+      $build_cmd .= "--no-timing " ;
       $build_cmd .= "-DPITON_DPI " ;
       $build_cmd .= "--unroll-count 256 " ;
       $build_cmd .= "-CFLAGS -DVERILATOR " ;
       $build_cmd .= "-CFLAGS -DPITON_DPI " ;
-      $build_cmd .= "-CFLAGS -lstdc++ " ;
+      $build_cmd .= "-LDFLAGS -lstdc++ " ;
       $build_cmd .= "-CFLAGS -I$dv_root/tools/pli/iop " ;
       $build_cmd .= "-CFLAGS -I$dv_root/tools/verilator " ;
     }
@@ -2397,6 +2404,12 @@ sub copy_image
     # first clean up the diag area
     `rm -rf diag.pal diag.s diag.S diag.pl diag.exe mem.image diag.ev symbol.tbl` ;
     die ("DIE. could not clean up image run area")  if ($?) ;
+
+    # add default paths for ariane RISCV tests
+    if ($opt{ariane}) {
+      push @{$opt{image_diag_root}}, "$ENV{ARIANE_ROOT}/tmp/riscv-tests/build/isa";
+      push @{$opt{image_diag_root}}, "$ENV{ARIANE_ROOT}/tmp/riscv-tests/build/benchmarks";
+    }
 
     my $image_full_path = &find_diag_path ($opt{image_diag_name}, $opt{image_diag_path}, $opt{image_diag_root}) ;
 

@@ -18,8 +18,8 @@
 # Make sure you have the following packages installed:
 #
 # sudo apt install \
-#          gcc-7 \
-#          g++-7 \
+#          gcc \
+#          g++ \
 #          gperf \
 #          autoconf \
 #          automake \
@@ -32,12 +32,16 @@
 #          bison \
 #          flex \
 #          texinfo \
-#          python-pexpect \
+#          python3-pexpect \
 #          libusb-1.0-0-dev \
 #          default-jdk \
 #          zlib1g-dev \
 #          valgrind \
 #          csh \
+#          gcc-riscv64-unknown-elf \
+#          picolibc-riscv64-unknown-elf \
+#          verilator \
+#          xxd \
 #          device-tree-compiler
 
 
@@ -72,22 +76,16 @@ fi
 export PITON_ROOT=`pwd`
 export ARIANE_ROOT=${PITON_ROOT}/piton/design/chip/tile/ariane/
 
-## GCC and RISCV GCC setup
+## GCC setup (using system packages)
 export CXX=g++ CC=gcc
-# customize this to a fast local disk
 
-if [ "$RISCV" ==  "" ]
-then
-  export RISCV=$HOME/scratch/riscv_install
-fi
-export VERILATOR_ROOT=$ARIANE_ROOT/tmp/verilator-4.014/
+# RISCV install prefix for spike and fesvr (built from source into ariane/tmp)
+export RISCV=${ARIANE_ROOT}/tmp
 
-# setup paths
-export PATH=$RISCV/bin:$VERILATOR_ROOT/bin:$PATH
+# Add spike/fesvr to PATH (system RISC-V GCC already in PATH)
+export PATH=$RISCV/bin:$PATH
 export LIBRARY_PATH=$RISCV/lib
 export LD_LIBRARY_PATH=$RISCV/lib
-export C_INCLUDE_PATH=$RISCV/include:$VERILATOR_ROOT/include
-export CPLUS_INCLUDE_PATH=$RISCV/include:$VERILATOR_ROOT/include
 
 # source OpenPiton setup script
 # note: customize this script to reflect your tool setup

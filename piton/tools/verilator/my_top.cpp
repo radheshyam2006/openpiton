@@ -38,7 +38,7 @@ Vcmp_top* top;
 VerilatedVcdC* tfp;
 #endif
 
-extern "C" void init_jbus_model_call(char *str, int oram);
+extern "C" void init_jbus_model_call(const char *str, int oram);
 
 // This is a 64-bit integer to reduce wrap over issues and
 // // allow modulus. You can also use a double, if you wish.
@@ -92,7 +92,7 @@ void reset_and_init() {
 
     top->async_mux = 0;
 
-    init_jbus_model_call((char *) "mem.image", 0);
+    init_jbus_model_call("mem.image", 0);
 
     std::cout << "Before first ticks" << std::endl << std::flush;
     tick();
