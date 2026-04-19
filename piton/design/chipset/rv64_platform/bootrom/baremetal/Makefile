@@ -14,7 +14,7 @@ all: $(bootrom_img)
 	$(OBJCOPY) -O binary $< $@
 
 %.elf: %.S linker.ld $(DTB)
-	$(GCC) -Tlinker.ld $< -nostdlib -static -Wl,--no-gc-sections -o $@
+	$(GCC) -Tlinker.ld -march=rv64imac_zicsr -mabi=lp64 $< -nostdlib -static -Wl,--no-gc-sections -o $@
 
 rv64_platform.dts: FORCE
 	$(PYTHON) ${DV_ROOT}/tools/bin/riscvlib.py

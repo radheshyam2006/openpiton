@@ -1,9 +1,12 @@
-#define DRAM_BASE 0x80000000
-
 .section .text.start, "ax", @progbits
 .globl _start
 _start:
-  li s0, DRAM_BASE
+  # li s0, 0x80000000 sign-extends in RV64 to 0xffffffff80000000.
+  # Use shift sequence to safely load DRAM_BASE without sign-extension.
+  li s0, 1
+  slli s0, s0, 31
+  slli s0, s0, 32
+  srli s0, s0, 32
   csrr a0, mhartid
   la a1, _dtb
   jr s0

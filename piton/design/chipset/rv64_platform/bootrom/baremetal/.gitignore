@@ -3,3 +3,4 @@
 *.dtb
 *.sv
 *.h
+bootrom/baremetal/bootrom.sv
